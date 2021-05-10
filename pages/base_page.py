@@ -7,7 +7,6 @@ from pages.locators import BasePageLocators
 
 
 class BasePage:
-
     def __init__(self, driver, url, timeout=10):
         # Init private fields
         self._driver = driver
@@ -17,10 +16,12 @@ class BasePage:
     def open(self):
         self._driver.get(self._url)
 
-    def is_element_present(self, by, selector):
+    def is_element_present(self, by, selector, timeout=4):
         try:
-            self._driver.find_element(by, selector)
-        except NoSuchElementException:
+            WebDriverWait(self._driver, timeout).until(
+                EC.presence_of_element_located((by, selector))
+            )
+        except (TimeoutException, NoSuchElementException):
             return False
         return True
 

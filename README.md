@@ -1,6 +1,6 @@
 ## Test automation with Selenium and Python
 
-> Stepik course: [https://stepik.org/course/575/syllabus"](https://stepik.org/course/575/syllabus)
+> Stepik course: [https://stepik.org/course/575/syllabus](https://stepik.org/course/575/syllabus)
 ---
 
 ### Structure

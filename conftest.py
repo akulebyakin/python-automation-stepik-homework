@@ -24,7 +24,7 @@ def init_firefox(options):
     return webdriver.Firefox(firefox_profile=fp)
 
 
-@pytest.fixture(scope="class")
+@pytest.fixture(scope="function")
 def driver(request):
     # Get CLI params
     browser_name = request.config.getoption("browser_name")

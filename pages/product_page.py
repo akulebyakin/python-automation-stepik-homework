@@ -1,6 +1,6 @@
 import math
 
-from selenium.common.exceptions import NoAlertPresentException  # в начале файла
+from selenium.common.exceptions import NoAlertPresentException
 
 from pages.base_page import BasePage
 from .locators import ProductPageLocators

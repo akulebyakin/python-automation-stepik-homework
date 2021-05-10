@@ -3,12 +3,12 @@ import pytest
 from pages.basket_page import BasketPage
 
 languages_data = (
-    # ("ar", "سلة التسوق فارغة"),
-    # ("ca", "La seva cistella està buida."),
+    ("ar", "سلة التسوق فارغة"),
+    ("ca", "La seva cistella està buida."),
     ("cs", "Váš košík je prázdný."),
     ("da", "Din indkøbskurv er tom."),
     ("de", "Ihr Warenkorb ist leer."),
-    ("en", "Your basket is empty."),
+    ("en-gb", "Your basket is empty."),
     ("el", "Το καλάθι σας είναι άδειο."),
     ("es", "Tu carrito esta vacío."),
     ("fi", "Korisi on tyhjä"),
@@ -23,13 +23,10 @@ languages_data = (
     ("ru", "Ваша корзина пуста"),
     ("sk", "Váš košík je prázdny"),
     ("uk", "Ваш кошик пустий."),
-    ("zh-cn", "Your basket is empty.")
 )
 
 
 class TestBasketPage:
-    # @pytest.mark.parametrize('language, expected_message', languages_data.keys(), languages_data.values())
-    # def test_empty_basket_text(self, driver, language, expected_message):
     @pytest.mark.parametrize('languages', languages_data)
     def test_empty_basket_text(self, driver, languages):
         url = "http://selenium1py.pythonanywhere.com/basket/"

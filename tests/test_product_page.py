@@ -24,23 +24,13 @@ page_urls = (
 
 
 class TestLoginFromProductPage:
-    # @pytest.fixture(scope="function", autouse=True)
-    # def setup(self):
-    #     # создаем продукт по апи
-    #     self.product = ProductFactory(title = "Best book created by robot")
-    #     self.link = self.product.link
-    #     yield
-    #     # после этого ключевого слова начинается teardown
-    #     # выполнится после каждого теста в классе
-    #     # удаляем те данные, которые мы создали
-    #     self.product.delete()
-
     def test_guest_should_see_login_link_on_product_page(self, driver):
         url = "http://selenium1py.pythonanywhere.com/catalogue/the-city-and-the-stars_95/"
         page = ProductPage(driver, url)
         page.open()
         page.should_be_login_link()
 
+    @pytest.mark.need_review
     def test_guest_can_go_to_login_page_from_product_page(self, driver):
         url = "http://selenium1py.pythonanywhere.com/catalogue/the-city-and-the-stars_95/"
         product_page = ProductPage(driver, url)
@@ -51,6 +41,7 @@ class TestLoginFromProductPage:
 
 
 class TestAddToBasketFromProductPage:
+    @pytest.mark.need_review
     @pytest.mark.parametrize('url', page_urls)
     def test_guest_can_add_product_to_basket(self, driver, url):
         page = ProductPage(driver, url)
@@ -81,37 +72,38 @@ class TestAddToBasketFromProductPage:
         page.add_to_basket()
         page.should_be_success_message_disappeared()
 
+    @pytest.mark.need_review
     def test_guest_cant_see_product_in_basket_opened_from_product_page(self, driver):
-        # Гость открывает страницу товара
+        # Guest goes to product page
         url = "http://selenium1py.pythonanywhere.com/catalogue/the-city-and-the-stars_95/"
         product_page = ProductPage(driver, url)
         product_page.open()
 
-        # Переходит в корзину по кнопке в шапке
+        # Guest goes to basket by clicking header button
         product_page.go_to_basket_page()
         basket_page = BasketPage(driver, driver.current_url)
 
-        # Ожидаем, что в корзине нет товаров
+        # Verify that the basket is empty
         basket_page.should_be_empty()
 
-        # Ожидаем, что есть текст о том что корзина пуста
+        # Verify that there is a text that the basket is empty
         basket_page.should_be_message_that_basket_is_empty()
 
 
 class TestUserAddToBasketFromProductPage:
     @pytest.fixture(scope="function", autouse=True)
     def setup(self, driver):
-        # открыть страницу регистрации;
+        # Go to login page
         login_page_url = "http://selenium1py.pythonanywhere.com/accounts/login/"
         login_page = LoginPage(driver, login_page_url)
         login_page.open()
 
-        # зарегистрировать нового пользователя;
+        # Register new user
         email = str(time.time()) + "@fakemail.org"
         password = "supercalifragilisticexpialidocious"
         login_page.register_new_user(email, password)
 
-        # проверить, что пользователь залогинен.
+        # Verify that user's been logged in
         login_page.should_be_authorized_user()
 
     def test_user_cant_see_success_message(self, driver):
@@ -120,6 +112,7 @@ class TestUserAddToBasketFromProductPage:
         page.open()
         page.should_not_be_success_message()
 
+    @pytest.mark.need_review
     def test_user_can_add_product_to_basket(self, driver):
         url = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/"
         page = ProductPage(driver, url)

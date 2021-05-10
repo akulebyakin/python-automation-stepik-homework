@@ -7,7 +7,9 @@ from pages.locators import BasePageLocators
 
 
 class BasePage:
+
     def __init__(self, driver, url, timeout=10):
+        # Init private fields
         self._driver = driver
         self._driver.implicitly_wait(timeout)
         self._url = url

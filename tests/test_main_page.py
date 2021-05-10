@@ -23,13 +23,16 @@ class TestLoginFromMainPage:
 
 
 def test_guest_cant_see_product_in_basket_opened_from_main_page(driver):
-    # Гость открывает главную страницу
+    # Guest goes to main page
     main_page = MainPage(driver, MAIN_PAGE_URL)
     main_page.open()
-    # Переходит в корзину по кнопке в шапке сайта
+
+    # Guest goes to basket by clicking header button
     main_page.go_to_basket_page()
     basket_page = BasketPage(driver, driver.current_url)
-    # Ожидаем, что в корзине нет товаров
+
+    # Verify that the basket is empty
     basket_page.should_be_empty()
-    # Ожидаем, что есть текст о том что корзина пуста
+
+    # Verify that there is a text that the basket is empty
     basket_page.should_be_message_that_basket_is_empty()

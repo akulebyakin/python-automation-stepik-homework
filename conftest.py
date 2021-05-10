@@ -8,19 +8,18 @@ def pytest_addoption(parser):
     parser.addoption("--language", action="store", default="en", help="Choose language: ru, en")
 
 
-def init_chrome(_options):
+def init_chrome(options):
     print("\nStart Chrome")
-    options = Options()
-    options.add_experimental_option('prefs', _options)
-    chrome = webdriver.Chrome(options=options)
-    print(type(chrome))
+    options_ = Options()
+    options_.add_experimental_option('prefs', options)
+    chrome = webdriver.Chrome(options=options_)
     return chrome
 
 
-def init_firefox(_options):
+def init_firefox(options):
     print("\nStart Firefox")
     fp = webdriver.FirefoxProfile()
-    for k, v in _options:
+    for k, v in options:
         fp.set_preference(k, v)
     return webdriver.Firefox(firefox_profile=fp)
 

@@ -12,7 +12,9 @@ def init_chrome(_options):
     print("\nStart Chrome")
     options = Options()
     options.add_experimental_option('prefs', _options)
-    return webdriver.Chrome(options=options)
+    chrome = webdriver.Chrome(options=options)
+    print(type(chrome))
+    return chrome
 
 
 def init_firefox(_options):

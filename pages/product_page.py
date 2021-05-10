@@ -10,7 +10,8 @@ class ProductPage(BasePage):
     def add_to_basket(self):
         button_add_to_basket = self._driver.find_element(*ProductPageLocators.BUTTON_ADD_TO_BASKET)
         button_add_to_basket.click()
-        self.solve_quiz_and_get_code()
+        if "promo" in self._url:
+            self.solve_quiz_and_get_code()
 
     def solve_quiz_and_get_code(self):
         alert = self._driver.switch_to.alert

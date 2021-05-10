@@ -19,8 +19,8 @@ def init_chrome(options):
 def init_firefox(options):
     print("\nStart Firefox")
     fp = webdriver.FirefoxProfile()
-    for k, v in options:
-        fp.set_preference(k, v)
+    for key in options:
+        fp.set_preference(key, options[key])
     return webdriver.Firefox(firefox_profile=fp)
 
 
@@ -37,7 +37,7 @@ def driver(request):
     if browser_name == "chrome":
         driver = init_chrome(options)
     elif browser_name == "firefox":
-        driver = webdriver.Firefox()
+        driver = init_firefox(options)
     else:
         raise pytest.UsageError("--browser_name should be 'chrome' or 'firefox'")
     yield driver

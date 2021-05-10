@@ -1,5 +1,6 @@
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 
 from pages.locators import BasePageLocators
@@ -14,7 +15,7 @@ class BasePage:
     def open(self):
         self._driver.get(self._url)
 
-    def is_element_presented(self, by, selector):
+    def is_element_present(self, by, selector):
         try:
             self._driver.find_element(by, selector)
         except NoSuchElementException:
@@ -43,4 +44,18 @@ class BasePage:
         login_link.click()
 
     def should_be_login_link(self):
-        assert self.is_element_presented(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+
+    def go_to_basket_page(self):
+        basket_page_link = self._driver.find_element(*BasePageLocators.BASKET_PAGE_LINK)
+        basket_page_link.click()
+
+    def change_language(self, language):
+        language_select = Select(self._driver.find_element(*BasePageLocators.SELECT_LANGUAGE))
+        language_select.select_by_value(language)
+        button_change_language = self._driver.find_element(*BasePageLocators.BUTTON_CHANGE_LANGUAGE)
+        button_change_language.click()
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), \
+            "User icon is not presented, probably unauthorised user"

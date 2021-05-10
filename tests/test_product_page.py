@@ -1,5 +1,6 @@
 import pytest
 
+from pages.login_page import LoginPage
 from pages.product_page import ProductPage
 
 page_urls = (
@@ -19,8 +20,7 @@ page_urls = (
 )
 
 
-class TestMainPage:
-
+class TestProductPage:
     @pytest.mark.parametrize('url', page_urls)
     def test_guest_can_add_product_to_basket(self, driver, url):
         page = ProductPage(driver, url)
@@ -51,3 +51,17 @@ class TestMainPage:
         page.open()
         page.add_to_basket()
         page.should_be_success_message_disappeared()
+
+    def test_guest_should_see_login_link_on_product_page(self, driver):
+        url = "http://selenium1py.pythonanywhere.com/catalogue/the-city-and-the-stars_95/"
+        page = ProductPage(driver, url)
+        page.open()
+        page.should_be_login_link()
+
+    def test_guest_can_go_to_login_page_from_product_page(self, driver):
+        url = "http://selenium1py.pythonanywhere.com/catalogue/the-city-and-the-stars_95/"
+        product_page = ProductPage(driver, url)
+        product_page.open()
+        product_page.go_to_login_page()
+        login_page = LoginPage(driver, driver.current_url)
+        login_page.should_be_login_page()

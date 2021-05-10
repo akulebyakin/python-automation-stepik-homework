@@ -1,12 +1,14 @@
-from selenium.webdriver.common.by import By
-
 from pages.base_page import BasePage
+from .locators import MainPageLocators
+from .login_page import LoginPage
 
 
 class MainPage(BasePage):
     def go_to_login_page(self):
-        login_link = self.driver.find_element(By.CSS_SELECTOR, "#login_link")
+        login_link = self._driver.find_element(*MainPageLocators.LOGIN_LINK)
+        login_page_url = login_link.get_attribute("href")
         login_link.click()
+        return LoginPage(self._driver, login_page_url)
 
     def should_be_login_link(self):
-        assert self.is_element_presented(By.CSS_SELECTOR, "#login_link"), "Login link is not presented"
+        assert self.is_element_presented(*MainPageLocators.LOGIN_LINK), "Login link is not presented"
